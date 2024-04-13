@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="text_personal_data">Datos Personales</string>
+    <string name="text_first_name">Primer Nombre</string>
+    <string name="text_last_name">Apellidos</string>
+    <string name="text_mandatory_field">Este campo es obligatorio</string>
+    <string name="text_sex">Sexo</string>
+    <string name="text_male">Hombre</string>
+    <string name="text_female">Mujer</string>
+    <string name="text_select">Seleccionar</string>
+    <string name="text_major">Grado Escolar</string>
+    <string name="text_next">Siguiente</string>
+    <string name="text_contact_data">Datos de contacto</string>
+    <string name="text_phone">Telefono</string>
+    <string name="text_address">Direccion</string>
+    <string name="text_email">Correo electronico</string>
+    <string name="text_country">País</string>
+    <string name="text_city">Ciudad</string>
+    <string name="text_comeback">Volver</string>
+    <string name="text_submit">Enviar</string>
+</resources>

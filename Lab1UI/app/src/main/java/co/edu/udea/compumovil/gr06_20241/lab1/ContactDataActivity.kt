@@ -19,7 +19,6 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.Divider
-import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -32,11 +31,12 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.TextFieldValue
-import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
@@ -72,10 +72,9 @@ fun ContactDataScreen(context: Context, activity: ComponentActivity) {
         verticalArrangement = Arrangement.Top,
     ) {
         Column(
-            verticalArrangement = Arrangement.Top
-        ) {
+            verticalArrangement = Arrangement.Top        ) {
             Text(
-                text = "Contact Data",
+                text = stringResource(id = R.string.text_contact_data),
                 style = TextStyle(
                     fontSize = 23.sp,
                     fontWeight = FontWeight.Light
@@ -93,7 +92,7 @@ fun ContactDataScreen(context: Context, activity: ComponentActivity) {
                 horizontalArrangement = Arrangement.Start
             ){
                 Text(
-                    text = "Phone:",
+                    text = stringResource(id = R.string.text_phone),
                     style = TextStyle(fontWeight = FontWeight.Bold),
                 )
                 Spacer(modifier = Modifier.width(5.dp))
@@ -112,7 +111,7 @@ fun ContactDataScreen(context: Context, activity: ComponentActivity) {
             )
             if (phone.text.isEmpty() || phone.text == "" || phone.text.trim() == ""){
                 Text(
-                    text = "This field is mandatory",
+                    text = stringResource(id = R.string.text_mandatory_field),
                     color = Color.Red
                 )
             } else {
@@ -120,14 +119,16 @@ fun ContactDataScreen(context: Context, activity: ComponentActivity) {
             }
             Spacer(modifier = Modifier.height(30.dp))
             Text(
-                text = "Address:",
+                text = stringResource(id = R.string.text_address),
                 style = TextStyle(fontWeight = FontWeight.Bold),
             )
             TextField(
                 value=address,
                 onValueChange={address = it},
                 keyboardOptions = KeyboardOptions.Default.copy(
-                    keyboardType = KeyboardType.Email
+                    keyboardType = KeyboardType.Text,
+                    autoCorrect = true,
+                    capitalization = KeyboardCapitalization.Words
                 ),
                 modifier = Modifier.fillMaxWidth()
             )
@@ -136,7 +137,7 @@ fun ContactDataScreen(context: Context, activity: ComponentActivity) {
                 horizontalArrangement = Arrangement.Start
             ) {
                 Text(
-                    text = "Email:",
+                    text = stringResource(id = R.string.text_email),
                     style = TextStyle(fontWeight = FontWeight.Bold),
                 )
                 Spacer(modifier = Modifier.width(5.dp))
@@ -148,12 +149,16 @@ fun ContactDataScreen(context: Context, activity: ComponentActivity) {
             TextField(
                 value=email,
                 onValueChange={email = it},
-                //keyboardOptions = keyboardType?.let { KeyboardOptions.Default.copy(keyboardType = it) },
+                keyboardOptions = KeyboardOptions.Default.copy(
+                    keyboardType = KeyboardType.Email,
+                    autoCorrect = true,
+                    capitalization = KeyboardCapitalization.Words
+                ),
                 modifier = Modifier.fillMaxWidth()
             )
             if (email.text.isEmpty() || email.text == "" || email.text.trim() == ""){
                 Text(
-                    text = "This field is mandatory",
+                    text = stringResource(id = R.string.text_mandatory_field),
                     color = Color.Red
                 )
             } else {
@@ -164,7 +169,7 @@ fun ContactDataScreen(context: Context, activity: ComponentActivity) {
                 horizontalArrangement = Arrangement.Start
             ) {
                 Text(
-                    text = "Country:",
+                    text = stringResource(id = R.string.text_country),
                     style = TextStyle(fontWeight = FontWeight.Bold),
                 )
                 Spacer(modifier = Modifier.width(5.dp))
@@ -177,6 +182,11 @@ fun ContactDataScreen(context: Context, activity: ComponentActivity) {
                 value=country,
                 onValueChange={country = it},
                 //keyboardOptions = keyboardType?.let { KeyboardOptions.Default.copy(keyboardType = it) },
+                keyboardOptions = KeyboardOptions.Default.copy(
+                    keyboardType = KeyboardType.Text,
+                    autoCorrect = true,
+                    capitalization = KeyboardCapitalization.Words
+                ),
                 modifier = Modifier.fillMaxWidth()
             )
             /*
@@ -198,7 +208,7 @@ fun ContactDataScreen(context: Context, activity: ComponentActivity) {
             */
             if (country.text.isEmpty() || country.text == "" || country.text.trim() == ""){
                 Text(
-                    text = "This field is mandatory",
+                    text = stringResource(id = R.string.text_mandatory_field),
                     color = Color.Red
                 )
             } else {
@@ -206,13 +216,17 @@ fun ContactDataScreen(context: Context, activity: ComponentActivity) {
             }
             Spacer(modifier = Modifier.height(30.dp))
             Text(
-                text = "City:",
+                text = stringResource(id = R.string.text_city),
                 style = TextStyle(fontWeight = FontWeight.Bold),
             )
             TextField(
                 value=city,
                 onValueChange={city = it},
-                //keyboardOptions = keyboardType?.let { KeyboardOptions.Default.copy(keyboardType = it) },
+                keyboardOptions = KeyboardOptions.Default.copy(
+                    keyboardType = KeyboardType.Text,
+                    autoCorrect = true,
+                    capitalization = KeyboardCapitalization.Words
+                ),
                 modifier = Modifier.fillMaxWidth()
             )
         }
@@ -231,7 +245,7 @@ fun ContactDataScreen(context: Context, activity: ComponentActivity) {
                 },
                 modifier = Modifier.weight(1f)
             ) {
-                Text("Come back")
+                Text(stringResource(id = R.string.text_comeback))
             }
             Spacer(modifier = Modifier.width(5.dp))
             Button(
@@ -253,7 +267,7 @@ fun ContactDataScreen(context: Context, activity: ComponentActivity) {
                 },
                 modifier = Modifier.weight(1f)
             ) {
-                Text("Submit")
+                Text(stringResource(id = R.string.text_submit))
             }
         }
     }

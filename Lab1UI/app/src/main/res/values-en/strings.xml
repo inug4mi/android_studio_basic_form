@@ -1,3 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+
 <resources>
     <string name="text_personal_data">Personal data</string>
     <string name="text_first_name">First Name</string>
@@ -9,7 +11,7 @@
     <string name="text_select">Select</string>
     <string name="text_major">Major</string>
     <string name="text_next">Next</string>
-    <string name="text_contact_data">Contact Data</string>
+    <string name="text_contact_data">Contact data</string>
     <string name="text_phone">Phone</string>
     <string name="text_address">Address</string>
     <string name="text_email">Email</string>

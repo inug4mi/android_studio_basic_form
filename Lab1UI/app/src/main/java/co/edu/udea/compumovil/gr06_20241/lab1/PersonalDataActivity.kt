@@ -1,5 +1,6 @@
 package co.edu.udea.compumovil.gr06_20241.lab1;
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -35,28 +36,40 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import java.util.Calendar
 import android.app.DatePickerDialog
+import android.content.res.Resources
 import android.util.Log
+//import androidx.compose.runtime.livedata.*
+import androidx.compose.ui.res.stringResource
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Divider
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.input.KeyboardCapitalization
+import androidx.compose.ui.text.input.KeyboardType
+import androidx.core.app.ActivityCompat.recreate
+import androidx.core.content.ContextCompat.startActivity
 import java.text.SimpleDateFormat
 import java.util.Locale
 
-class PersonalDataActivity : ComponentActivity(){
+class PersonalDataActivity : ComponentActivity() {
+
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         title = "PersonalDataActivity"
+
         setContent {
             MaterialTheme {
                 Surface {
-                    personalData(context=this)
+                    personalData(context = this, resources = resources)
                 }
             }
         }
@@ -64,8 +77,8 @@ class PersonalDataActivity : ComponentActivity(){
 }
 
 @Composable
-fun personalData(context: Context){
-
+fun personalData(context: Context, resources: Resources){
+    var isSpanishLocale by remember { mutableStateOf(Locale.getDefault().language=="es") }
     var name by remember { mutableStateOf(TextFieldValue()) }
     var lastname by remember { mutableStateOf(TextFieldValue())}
 
@@ -78,6 +91,9 @@ fun personalData(context: Context){
 
     val scrollState = rememberScrollState()
 
+
+    //setContentView(R.layout.personaldata)
+    //val textView = findViewById<TextView>(R.id.textView)
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -88,8 +104,21 @@ fun personalData(context: Context){
         Column(
             verticalArrangement = Arrangement.Top
         ) {
+            Button(onClick = {
+                isSpanishLocale = !isSpanishLocale
+                val locale = if (isSpanishLocale) Locale("es") else Locale("en")
+                Locale.setDefault(locale)
+                val config = resources.configuration
+                config.setLocale(locale)
+                context.createConfigurationContext(config) // Apply the configuration
+                context.resources.updateConfiguration(config, context.resources.displayMetrics)
+                (context as? Activity)?.recreate()
+            }) {
+                Text(text = if (isSpanishLocale) "Switch to English" else "Cambiar a español")
+            }
+
             Text(
-                text = "Personal Data",
+                text = stringResource(id = R.string.text_personal_data),
                 style = TextStyle(
                     fontSize = 23.sp,
                     fontWeight = FontWeight.Light
@@ -110,7 +139,7 @@ fun personalData(context: Context){
                 horizontalArrangement = Arrangement.Start
             ) {
                 Text(
-                    text = "First Name:",
+                    text = stringResource(id = R.string.text_first_name),
                     style = TextStyle(fontWeight = FontWeight.Bold),
                 )
                 Spacer(modifier = Modifier.width(5.dp))
@@ -122,11 +151,16 @@ fun personalData(context: Context){
             TextField(
                 value = name,
                 onValueChange = { name = it },
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier.fillMaxWidth(),
+                keyboardOptions = KeyboardOptions.Default.copy(
+                    keyboardType = KeyboardType.Text,
+                    autoCorrect = true,
+                    capitalization = KeyboardCapitalization.Words
+            )
             )
             if (name.text.isEmpty() || name.text == "" || name.text.trim() == ""){
                 Text(
-                    text = "This field is mandatory",
+                    text = stringResource(id = R.string.text_mandatory_field),
                     color = Color.Red
                 )
             }
@@ -135,7 +169,7 @@ fun personalData(context: Context){
                 horizontalArrangement = Arrangement.Start
             ) {
                 Text(
-                    text = "Last Name:",
+                    text = stringResource(id = R.string.text_last_name),
                     style = TextStyle(fontWeight = FontWeight.Bold),
                 )
                 Spacer(modifier = Modifier.width(5.dp))
@@ -147,11 +181,16 @@ fun personalData(context: Context){
             TextField(
                 value = lastname,
                 onValueChange = { lastname = it },
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier.fillMaxWidth(),
+                keyboardOptions = KeyboardOptions.Default.copy(
+                    keyboardType = KeyboardType.Text,
+                    autoCorrect = true,
+                    capitalization = KeyboardCapitalization.Words
+            )
             )
             if (lastname.text.isEmpty() || lastname.text == "" || lastname.text.trim() == ""){
                 Text(
-                    text = "This field is mandatory",
+                    text = stringResource(id = R.string.text_mandatory_field),
                     color = Color.Red
                 )
             }
@@ -166,7 +205,7 @@ fun personalData(context: Context){
                     horizontalArrangement = Arrangement.Start
                 ) {
                     Text(
-                        "Sex: ",
+                        text=stringResource(id = R.string.text_sex),
                         style = TextStyle(fontWeight = FontWeight.Bold),
                     )
 
@@ -183,7 +222,7 @@ fun personalData(context: Context){
                             onClick = { selectedSexOption = Sex.Man }
                         )
                         Text(
-                            "Male",
+                            stringResource(id = R.string.text_male),
                         )
                     }
                     //Spacer(modifier = Modifier.width(12.dp))
@@ -196,7 +235,7 @@ fun personalData(context: Context){
 
                         )
                         Text(
-                            "Female",
+                            stringResource(id = R.string.text_female),
                         )
                     }
                 }
@@ -229,7 +268,7 @@ fun personalData(context: Context){
                             .fillMaxWidth()
                             .padding(8.dp)
                     ) {
-                        Text("Select")
+                        Text(stringResource(id = R.string.text_select))
                     }
                 }
             }
@@ -242,7 +281,7 @@ fun personalData(context: Context){
                 modifier = Modifier.align(Alignment.Start)
             ) {
                 Text(
-                    "Major:",
+                    stringResource(id = R.string.text_major),
                     style = TextStyle(fontWeight = FontWeight.Bold),
                 )
                 Spacer(modifier = Modifier.width(25.dp))
@@ -310,11 +349,12 @@ fun personalData(context: Context){
                 .padding(8.dp) // Adjust the padding as needed
                 .fillMaxWidth()
         ) {
-            Text("Next")
+            Text(stringResource(id = R.string.text_next))
         }
 
     }
 }
+
 
 fun showDatePickerDialog(context: Context, initialDate: Calendar, onDateSelected: (Calendar)->Unit){
     val calendar = Calendar.getInstance().apply{
